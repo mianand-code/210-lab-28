@@ -115,7 +115,7 @@ int main()
                 break;
 
             case 11:
-                clear_trip(trip); // clear_trip() function call, will c
+                clear_trip(trip); // clear_trip() function call, will completely clear all of the Goat objects stored in the std::list
                 break;
 
             case 12:
@@ -169,28 +169,50 @@ int main_menu()
     return choice; // return int choice to main()
 }
 
-void add_goat(list<Goat> &trip, string nms[], string cls[]) {
+// void add_goat(list<Goat> &trip, string nms[], string cls[]) function header
+// DESCRIPTION: this function adds a new Goat object to the end of the list. Name, age, and color are all randomly selected and assigned to the Goat object
+// ARGUMENTS: list<Goat> &trip, which is a list of Goat objects
+// - passing by reference because the list will be modified and this modification will also reflect in main()
+// - string nms[], which is an array of names. A name will be randomly selected from this array
+// - string cls[], which is an array of colors. A color will be randomly selected from this array
+// RETURNS: nothing, void function
+void add_goat(list<Goat> &trip, string nms[], string cls[]) 
+{
     cout << "ADD A GOAT\n";
-    int age = rand() % MAX_AGE;
-    string nm = nms[rand() % SZ_NAMES];
-    string cl = cls[rand() % SZ_COLORS];
-    Goat tmp(nm, age, cl);
-    trip.push_back(tmp);
-    cout << "Goat added. New trip size: " << trip.size() << endl;
+    int age = rand() % (MAX_AGE + 1); // random assignment of a age between 0 - 20 (MAX_AGE) and assigning it to "age"
+    string nm = nms[rand() % SZ_NAMES]; // random selection of a name within the "nms" array and assigning it to "nm"
+    string cl = cls[rand() % SZ_COLORS]; // random selection of a color within the "cls" array and assigning it to "cl"
+    Goat tmp(nm, age, cl); // creation of a temp "tmp" Goat object with all 3 parameters
+    trip.push_back(tmp); // using .push_back() member function, adds Goat object to the end of the list 
+    cout << "Goat added. New trip size: " << trip.size() << endl; // using .size() member function, to display the new size of the trip
 }
 
-void delete_goat(list<Goat> &trip) {
+// void delete_goat(list<Goat> &trip) function header
+// DESCRIPTION: this function deletes a user-chosen Goat object within the list
+// - this function works hand-in-hand with the select_goat() function 
+// ARGUMENTS: list<Goat> &trip, which is a list of Goat objects
+// - passing by reference because the list will be modified and this modification will also reflect in main()
+// RETURNS: nothing, void function
+void delete_goat(list<Goat> &trip) 
+{
     cout << "DELETE A GOAT\n";
-    int index = select_goat(trip);
-    auto it = trip.begin();
-    advance(it, index-1);
-    trip.erase(it);
-    cout << "Goat deleted. New trip size: " << trip.size() << endl;
+    int index = select_goat(trip); // select_goat() function call, assigns user's choice of which Goat object (#) to delete to index
+    // creation of an iterator using the C++ 11 "auto" keyword, since we cannot access objects by index
+    auto it = trip.begin(); // using .begin() member function to start at the beginning of the list
+    advance(it, index-1); // advance the iterator to the position of the Goat object we want to delete
+    trip.erase(it); // using .erase() member function, to erase the Goat object at the position of the iterator
+    cout << "Goat deleted. New trip size: " << trip.size() << endl; // using .size() member function, to display the new size of the trip
 }
 
-void display_trip(list<Goat> trp) {
-    int i = 1;
-    for (auto gt: trp)
+// void display_trip(list<Goat> trp) function header
+// DESCRIPTION: this function neatly outputs the contents of the list
+// ARGUMENTS: list<Goat> trp, which is a list of Goat objects
+// RETURNS: nothing, void function
+void display_trip(list<Goat> trp) 
+{
+    int i = 1; // to keep track of the # of goats in the list
+    for (auto gt: trp) // using a C++ 11 range loop and "auto" keyword to output contents of the list
+    // calling all getters to output names, ages, and colors for each Goat object
         cout << "\t" 
              << "[" << i++ << "] "
              << gt.get_name() 
@@ -198,7 +220,8 @@ void display_trip(list<Goat> trp) {
              << ", " << gt.get_color() << ")\n";
 }
 
-int select_goat(list<Goat> trp) {
+int select_goat(list<Goat> trp) 
+{
     int input;
     cout << "Make a selection:\n";
     display_trip(trp);
