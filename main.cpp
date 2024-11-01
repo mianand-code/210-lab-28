@@ -233,12 +233,27 @@ void reverse_trip(list<Goat> &trip)
 }
 
 // void find_goat(list<Goat> trip) function header
-// DESCRIPTION:
+// DESCRIPTION: this function asks the user to enter the name of a goat that they would like to find within the std::list
+// - disclaimer: the user is informed that name entry is case sensitive, they should enter the goat's name exactly the way it is stored within the std::list
+// - if the goat is found, t
 // ARGUMENTS: list<Goat> trip, which is a list of Goat objects
 // RETURNS: nothing, void function
 void find_goat(list<Goat> trip)
 {
+    string name; // to hold the name of the goat the user would like to find
+    cout << "Enter the name of the goat you want to find (case sensitive): ";
+    getline(cin, name);
+    while (name.empty()) // user input validation, to ensure the field is not left blank
+    {
+        cout << "ERROR: Name field cannot remain blank. Please try again & enter a name: ";
+        getline(cin, name);
+    }
 
+    auto it = find_if(trip.begin(), trip.end(), [name](const Goat& g){ return g.get_name() == name; });
+    if (it != trip.end())
+        cout << it->get_name() << " found with age " << it->get_age() << " and color " << it->get_color() << endl << endl;
+    else
+        cout << name << " was not found." << endl << endl;
 }
 
 // int select_goat(list<Goat> trp) function header
