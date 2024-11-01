@@ -24,8 +24,12 @@ void delete_goat(list<Goat> &trip);
 void display_trip(list<Goat> trip);
 void reverse_trip(list<Goat> &trip);
 void find_goat(list<Goat> trip);
-void any_of_goat(list<Goat> trip);
-
+void any_of_goat_age(list<Goat> trip);
+void shuffle_trip(list<Goat> &trip);
+void fill_trip(list<Goat> &trip);
+void accumulate_trip_age(list<Goat> trip);
+void erase_goats_below_age(list<Goat> &trip);
+void clear_trip(list<Goat> &trip);
 int select_goat(list<Goat> trip);
 
 int main() 
@@ -124,20 +128,32 @@ int main()
     return 0;
 }
 
-int main_menu() {
-    cout << "*** GOAT MANAGER 3001 ***\n";
-    cout << "[1] Add a goat\n";
-    cout << "[2] Delete a goat\n";
-    cout << "[3] List goats\n";
-    cout << "[4] Quit\n";
+// int main_menu() function header
+// DESCRIPTION: this function outputs a GM3K1 menu, obtains the user's choice for the menu option # they would like to select, validates it, and returns this choice to main()
+// ARGUMENTS: no arguments/parameters
+// RETURNS: int choice, which is the user input for the menu option # they would like to select
+int main_menu() 
+{
+    cout << "*** GOAT MANAGER 3001 ***" << endl;
+    cout << "[1] Add a goat" << endl;
+    cout << "[2] Delete a goat" << endl;
+    cout << "[3] List goats" << endl;
+    cout << "[4] Reverse the goat trip" << endl;
+    cout << "[5] Find a goat (by name)" << endl;
+    cout << "[6] Check if "
+    cout << "[12] Quit" << endl;
     cout << "Choice --> ";
-    int choice;
+
+    int choice; // to hold user's choice for menu option #
     cin >> choice;
-    while (choice < 1 || choice > 4) {
+    // input validation is performed, to ensure that the user does not input an invalid menu option #
+    // if they input an invalid choice, they will be prompted again until they enter a valid choice
+    while (choice < 1 || choice > 12) {
         cout << "Invalid, again --> ";
         cin >> choice;
     }
-    return choice;
+
+    return choice; // return int choice to main()
 }
 
 void add_goat(list<Goat> &trip, string nms[], string cls[]) {
