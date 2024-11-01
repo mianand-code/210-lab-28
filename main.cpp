@@ -233,9 +233,9 @@ void reverse_trip(list<Goat> &trip)
 }
 
 // void find_goat(list<Goat> trip) function header
-// DESCRIPTION: this function asks the user to enter the name of a goat that they would like to find within the std::list
+// DESCRIPTION: this function prompts the user to enter the name of a goat that they would like to find within the std::list
 // - disclaimer: the user is informed that name entry is case sensitive, they should enter the goat's name exactly the way it is stored within the std::list
-// - if the goat is found, t
+// - if the goat is found, the goat's age and color are also printed. The user is notified if the goat is not found
 // ARGUMENTS: list<Goat> trip, which is a list of Goat objects
 // RETURNS: nothing, void function
 void find_goat(list<Goat> trip)
@@ -249,9 +249,15 @@ void find_goat(list<Goat> trip)
         getline(cin, name);
     }
 
+    // create an iterator
+    // use the find_if member function to find the goat within the std::list
+    // find_if will start at the beginning of the std::list and search until the end (trip.begin() and trip.end())
+    // [name] is used to compare the user's input to the names of the Goat objects stored within the std::list
+    // const Goat& g is a reference to a Goat object, const is used to signify that the original object should not be modified
+    // return g.get_name() == name checks if the name entered by the user matches the name of a certain Goat object within the std::list. True or false is returned
     auto it = find_if(trip.begin(), trip.end(), [name](const Goat& g){ return g.get_name() == name; });
-    if (it != trip.end())
-        cout << it->get_name() << " found with age " << it->get_age() << " and color " << it->get_color() << endl << endl;
+    if (it != trip.end()) // if the iterator has not gone beyond the range of the std::list, we have found the goat
+        cout << it->get_name() << " found with age " << it->get_age() << " and color " << it->get_color() << endl << endl; // call all getters to display info about goat
     else
         cout << name << " was not found." << endl << endl;
 }
