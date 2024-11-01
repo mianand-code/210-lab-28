@@ -323,15 +323,40 @@ void fill_trip(list<Goat> &trip)
 }
 
 // void accumulate_trip_age(list<Goat> trip) function header
-// DESCRIPTION: this function takes the ages for all of the Goat objects and sums them up
+// DESCRIPTION: this function takes the ages for all of the Goat objects, sums them up, and outputs the calculated total
 // ARGUMENTS: list<Goat> trip, which is a list of Goat objects
 // RETURNS: nothing, void function
 void accumulate_trip_age(list<Goat> trip)
 {
     // creation of an int variable called "totalAge"
     // use the accumulate member function to sum up the ages of all Goat objects within the std::list
+    // accumulate will start at the beginning of the std::list and search until the end (trip.begin() and trip.end())
+    // the sum will start at 0
+    // int sum will keep a running total of all the ages
+    // const Goat& g is a reference to a Goat object, const is used to signify that the original object should not be modified
+    // return sum + g.get_age() - the age of a single Goat object will be added to the sum we have accumulated so far
     int totalAge = accumulate(trip.begin(), trip.end(), 0, [](int sum, const Goat& g){ return sum + g.get_age(); });
     cout << "Total age (after summing up ages of all goats): " << totalAge << endl << endl;
+}
+
+// void erase_goats_below_age(list<Goat> &trip) function header
+// DESCRIPTION: this function will erase all Goat objects that are below a certain age (age is provided through user input)
+// // - the modified std::list is printed
+// ARGUMENTS: list<Goat> &trip, which is a list of Goat objects
+// - passing by reference because the list will be modified and this modification will also reflect in main()
+// RETURNS: nothing, void function
+void erase_goats_below_age(list<Goat> &trip)
+{
+    int age; // to hold the user's choice for age (this age will determine the Goat objects that are being erased)
+    do // creation of a do-while loop to ensure user input validation - prompt user until they enter a valid age (0-20)
+    {
+        cout << "Enter the goat's age you would like to check/search for (0-20): ";
+        cin >> age;
+
+        if (age < 0 || age > 20) 
+            cout << "ERROR: Goat's age must be between 0-20. Please try again and enter a valid age." << endl;
+
+    } while (age < 0 || age > 20);
 }
 
 // int select_goat(list<Goat> trp) function header
