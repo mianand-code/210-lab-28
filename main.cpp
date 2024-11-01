@@ -18,11 +18,15 @@ const int SZ_NAMES = 200; // represents array size for names, array can hold 200
 const int SZ_COLORS = 25; // represents array size for colors, array can hold 25 colors
 
 // function prototypes
-int select_goat(list<Goat> trip);
-void delete_goat(list<Goat> &trip);
-void add_goat(list<Goat> &trip, string [], string []);
-void display_trip(list<Goat> trip);
 int main_menu();
+void add_goat(list<Goat> &trip, string [], string []);
+void delete_goat(list<Goat> &trip);
+void display_trip(list<Goat> trip);
+void reverse_trip(list<Goat> &trip);
+void find_goat(list<Goat> trip);
+void any_of_goat(list<Goat> trip);
+
+int select_goat(list<Goat> trip);
 
 int main() 
 {
@@ -65,19 +69,50 @@ int main()
         {
             case 1:
                 cout << "Adding a goat.\n";
-                add_goat(trip, names, colors);
+                add_goat(trip, names, colors); // add_goat() function call, will add a Goat object (with its 3 parameters) to the container/std::list
                 break;
 
             case 2:    
                 cout << "Removing a goat.\n";
-                delete_goat(trip);
+                delete_goat(trip); // delete_goat() function call, will delete a Goat object from the container/std::list
                 break;
                 
             case 3:    
                 cout << "Displaying goat data.\n";
-                display_trip(trip);
+                display_trip(trip); // display_trip() function call, will display the current list of Goat objects
                 break;
-                
+
+            case 4:
+                break;
+
+            case 5:
+                break;
+            
+            case 6:
+                break;
+
+            case 7:
+                break;
+            
+            case 8:
+                break;
+
+            case 9:
+                break;
+
+            case 10:
+                break;
+
+            case 11:
+                break;
+
+            case 12:
+                // option #12 is when user wants to quit
+                cout << "Exiting program..." << endl;
+                break;
+
+            // user input validation for menu option # (has to be 1-12)
+            // main_menu() function also handles user input validation, but it is good to include it here also for completeness
             default:
                 cout << "Invalid selection.\n";
                 break;
@@ -105,15 +140,6 @@ int main_menu() {
     return choice;
 }
 
-void delete_goat(list<Goat> &trip) {
-    cout << "DELETE A GOAT\n";
-    int index = select_goat(trip);
-    auto it = trip.begin();
-    advance(it, index-1);
-    trip.erase(it);
-    cout << "Goat deleted. New trip size: " << trip.size() << endl;
-}
-
 void add_goat(list<Goat> &trip, string nms[], string cls[]) {
     cout << "ADD A GOAT\n";
     int age = rand() % MAX_AGE;
@@ -122,6 +148,15 @@ void add_goat(list<Goat> &trip, string nms[], string cls[]) {
     Goat tmp(nm, age, cl);
     trip.push_back(tmp);
     cout << "Goat added. New trip size: " << trip.size() << endl;
+}
+
+void delete_goat(list<Goat> &trip) {
+    cout << "DELETE A GOAT\n";
+    int index = select_goat(trip);
+    auto it = trip.begin();
+    advance(it, index-1);
+    trip.erase(it);
+    cout << "Goat deleted. New trip size: " << trip.size() << endl;
 }
 
 void display_trip(list<Goat> trp) {
