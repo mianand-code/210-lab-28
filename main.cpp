@@ -171,6 +171,7 @@ int main_menu()
 
 // void add_goat(list<Goat> &trip, string nms[], string cls[]) function header
 // DESCRIPTION: this function adds a new Goat object to the end of the list. Name, age, and color are all randomly selected and assigned to the Goat object
+// - the new trip size is displayed after adding a new object
 // ARGUMENTS: list<Goat> &trip, which is a list of Goat objects
 // - passing by reference because the list will be modified and this modification will also reflect in main()
 // - string nms[], which is an array of names. A name will be randomly selected from this array
@@ -189,6 +190,7 @@ void add_goat(list<Goat> &trip, string nms[], string cls[])
 
 // void delete_goat(list<Goat> &trip) function header
 // DESCRIPTION: this function deletes a user-chosen Goat object within the list
+// - the new trip size is displayed after deleting an object
 // - this function works hand-in-hand with the select_goat() function 
 // ARGUMENTS: list<Goat> &trip, which is a list of Goat objects
 // - passing by reference because the list will be modified and this modification will also reflect in main()
@@ -205,7 +207,7 @@ void delete_goat(list<Goat> &trip)
 }
 
 // void display_trip(list<Goat> trp) function header
-// DESCRIPTION: this function neatly outputs the contents of the list
+// DESCRIPTION: this function neatly outputs the contents of the std::list
 // ARGUMENTS: list<Goat> trp, which is a list of Goat objects
 // RETURNS: nothing, void function
 void display_trip(list<Goat> trp) 
@@ -222,6 +224,7 @@ void display_trip(list<Goat> trp)
 
 // void reverse_trip(list<Goat> &trip) function header
 // DESCRIPTION: this function will reverse the order of the Goat objects stored in the std::list
+// - the modified std::list is printed
 // ARGUMENTS: list<Goat> &trip, which is a list of Goat objects
 // - passing by reference because the list will be modified and this modification will also reflect in main()
 // RETURNS: nothing, void function
@@ -292,6 +295,7 @@ void any_of_goat_age(list<Goat> trip)
 
 // void shuffle_trip(list<Goat> &trip) function header
 // DESCRIPTION: this function will shuffle the order of the Goat objects stored in the std::list, randomly
+// - the modified std::list is printed
 // ARGUMENTS: list<Goat> &trip, which is a list of Goat objects
 // - passing by reference because the list will be modified and this modification will also reflect in main()
 // RETURNS: nothing, void function
@@ -305,6 +309,8 @@ void shuffle_trip(list<Goat> &trip)
 
 // void fill_trip(list<Goat> &trip) function header
 // DESCRIPTION: this function takes a range of Goat objects (in this case, the 1st 3 goats) and fills them with set default values
+// - this resets the values of the 1st 3 goats
+// - the modified std::list is printed
 // ARGUMENTS: list<Goat> &trip, which is a list of Goat objects
 // - passing by reference because the list will be modified and this modification will also reflect in main()
 // RETURNS: nothing, void function
@@ -314,6 +320,18 @@ void fill_trip(list<Goat> &trip)
     // name & color will be set to "Unknown" string and age will be set to 0
     fill(trip.begin(), next(trip.begin(), 3), Goat("Unknown", 0, "Unknown"));
     display_trip(trip); // display_trip() function call to output the modified std::list
+}
+
+// void accumulate_trip_age(list<Goat> trip) function header
+// DESCRIPTION: this function takes the ages for all of the Goat objects and sums them up
+// ARGUMENTS: list<Goat> trip, which is a list of Goat objects
+// RETURNS: nothing, void function
+void accumulate_trip_age(list<Goat> trip)
+{
+    // creation of an int variable called "totalAge"
+    // use the accumulate member function to sum up the ages of all Goat objects within the std::list
+    int totalAge = accumulate(trip.begin(), trip.end(), 0, [](int sum, const Goat& g){ return sum + g.get_age(); });
+    cout << "Total age (after summing up ages of all goats): " << totalAge << endl << endl;
 }
 
 // int select_goat(list<Goat> trp) function header
