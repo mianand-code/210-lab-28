@@ -51,7 +51,6 @@ public:
     // RETURNS: no return type
     Goat(string n, int a, string c) { name = n; age = a; color = c; }
 
-
     // putting all setters together, to keep it organized
     // void set_name(string n), void set_age(int a), void set_color(string c) function header
     // DESCRIPTION: these functions will "set" the name, age, and color for each Goat object
@@ -75,7 +74,6 @@ public:
     int get_age() const             { return age; }
     string get_color() const        { return color; }
 
-    
     // write overloaded < operator for the std::list
     // this is needed so we can decide how we want Goat objects to be sorted
     // in this case - we want to sort alphabetically, by name

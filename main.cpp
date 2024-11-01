@@ -2,44 +2,56 @@
 // Module 10, Lesson: std::map & STL Algorithms, Assignment: STL Algorithms
 // IDE used: Visual Studio Code for Mac
 
+#include <algorithm> // to use STL algorithm library
+#include <cstdlib> // needed to generate a random number
+#include <ctime> // needed to generate a random number
+#include <fstream> // needed for file operations
+#include "Goat.h" // references the Goat header file, which contains a complete class for Goat objects
 #include <iostream>
-#include <fstream>
-#include <iomanip>
-#include <list>
-#include "Goat.h"
+#include <list> // needed to use std::list
+#include <random> // to use default_random_engine() - for shuffling
+#include <string>
 using namespace std;
 
-const int SZ_NAMES = 200, SZ_COLORS = 25;
+// declaration and initialization of const int variables
+const int SZ_NAMES = 200; // represents array size for names, array can hold 200 names
+const int SZ_COLORS = 25; // represents array size for colors, array can hold 25 colors
 
+// function prototypes
 int select_goat(list<Goat> trip);
 void delete_goat(list<Goat> &trip);
 void add_goat(list<Goat> &trip, string [], string []);
 void display_trip(list<Goat> trip);
 int main_menu();
 
-int main() {
-    srand(time(0));
+int main() 
+{
+    srand(time(0)); // needed as the first line in main() for randomization
     bool again;
 
-    // read & populate arrays for names and colors
+    // code block to read & populate arrays for names
     ifstream fin("names.txt");
     string names[SZ_NAMES];
     int i = 0;
     while (fin >> names[i++]);
     fin.close();
+
+    // code block to read & populate arrays for colors
     ifstream fin1("colors.txt");
     string colors[SZ_COLORS];
     i = 0;
     while (fin1 >> colors[i++]);
     fin1.close();
 
-    // create & populate a trip of Goats using std::list of random size 8-15
-    int tripSize = rand() % 8 + 8;
-    list<Goat> trip;
-    int age;
-    string name, color;
-    for (int i = 0; i < tripSize; i++) {
-        age = rand() % MAX_AGE;  // defined in Goat.h
+    // code block to create & populate a trip of Goats using std::list of random size 8-15
+    int tripSize = rand() % 8 + 8; // declare and initialize a variable to hold the random trip size (8-15)
+    list<Goat> trip; // creation of an std::list to hold Goat objects
+    int age; // to hold the goat's age
+    string name, color; // to hold the goat's name and color
+    for (int i = 0; i < tripSize; i++) // creation of a for loop to populate the std::list with Goat objects
+    {
+        // defined in Goat.h
+        age = rand() % MAX_AGE; 
         name = names[rand() % SZ_NAMES];
         color = colors[rand() % SZ_COLORS];
         Goat tmp(name, age, color);
