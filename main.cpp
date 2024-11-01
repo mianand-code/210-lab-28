@@ -220,16 +220,45 @@ void display_trip(list<Goat> trp)
              << ", " << gt.get_color() << ")\n";
 }
 
+// void reverse_trip(list<Goat> &trip) function header
+// DESCRIPTION: this function will reverse the order of the Goat objects stored in the std::list
+// ARGUMENTS: list<Goat> &trip, which is a list of Goat objects
+// - passing by reference because the list will be modified and this modification will also reflect in main()
+// RETURNS: nothing, void function
+void reverse_trip(list<Goat> &trip)
+{
+    reverse(trip.begin(), trip.end()); // using the reverse member function to reverse the order of the std::list from beginning to end
+    cout << "The order of the goat trip has been reversed:" << endl;
+    display_trip(trip); // display_trip() function call to output the modified std::list
+}
+
+// void find_goat(list<Goat> trip) function header
+// DESCRIPTION:
+// ARGUMENTS: list<Goat> trip, which is a list of Goat objects
+// RETURNS: nothing, void function
+void find_goat(list<Goat> trip)
+{
+
+}
+
+// int select_goat(list<Goat> trp) function header
+// DESCRIPTION: this function will output the contents of the list, prompt the user to select a Goat object (#) they would like to delete from the list, and then return this choice
+// - the user's choice is validated to ensure they do not select a # that is not within the range of the list size
+// this function works hand-in-hand with the delete_goat() function, because delete_goat() requires SELECTION of a specific goat
+// ARGUMENTS: list<Goat> trp, which is a list of Goat objects
+// RETURNS: int input, which is the user input for the Goat object # they would like to delete
 int select_goat(list<Goat> trp) 
 {
-    int input;
+    int input; // to hold user's choice for goat # they wish to select
     cout << "Make a selection:\n";
-    display_trip(trp);
+    display_trip(trp); // display_trip() function call, to display the current list of Goat objects for the user to select from
     cout << "Choice --> ";
     cin >> input;
-    while (input < 1 or input > trp.size()) {
+    while (input < 1 or input > trp.size()) // using .size() member function - loop ensures that the user does not enter a number that is less/greater than the size of the list
+    {
         cout << "Invalid choice, again --> ";
         cin >> input;
     }
-    return input;
+
+    return input; // return int input
 }
