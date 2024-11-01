@@ -263,7 +263,8 @@ void find_goat(list<Goat> trip)
 }
 
 // void any_of_goat_age(list<Goat> trip) function header
-// DESCRIPTION:
+// DESCRIPTION: this function checks if a specific age entered by the user matches any of the ages of the Goat objects stored in the std::list
+// - "yes" or "no" will be printed, depending on whether a match/matches were found or not
 // ARGUMENTS: list<Goat> trip, which is a list of Goat objects
 // RETURNS: nothing, void function
 void any_of_goat_age(list<Goat> trip)
@@ -279,8 +280,24 @@ void any_of_goat_age(list<Goat> trip)
 
     } while (age < 0 || age > 20);
 
+    // create a bool named "hasAge"
+    // use the any_of member function to see if any of the Goat objects within the std::list match/are of the age that the user entered
+    // any_of will start at the beginning of the std::list and search until the end (trip.begin() and trip.end())
+    // [age] is used to compare the user's input to the ages of the Goat objects stored within the std::list
+    // const Goat& g is a reference to a Goat object, const is used to signify that the original object should not be modified
+    // return g.get_age() == age checks if the age entered by the user matches the age of a certain Goat object within the std::list. True or false is returned
     bool hasAge = any_of(trip.begin(), trip.end(), [age](const Goat& g){ return g.get_age() == age; });
-    cout << "Is there a goat with age " << age << "? " << (hasAge ? "Yes" : "No") << endl << endl;
+    cout << "Is there a goat with age " << age << "? " << (hasAge ? "Yes" : "No") << endl << endl; // yes will be printed if a match/matches are found, otherwise no will be printed
+}
+
+// void shuffle_trip(list<Goat> &trip) function header
+// DESCRIPTION: 
+// ARGUMENTS: list<Goat> &trip, which is a list of Goat objects
+// - passing by reference because the list will be modified and this modification will also reflect in main()
+// RETURNS: nothing, void function
+void shuffle_trip(list<Goat> &trip)
+{
+
 }
 
 // int select_goat(list<Goat> trp) function header
