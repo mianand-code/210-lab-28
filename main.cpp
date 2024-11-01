@@ -27,7 +27,6 @@ int main_menu();
 int main() 
 {
     srand(time(0)); // needed as the first line in main() for randomization
-    bool again;
 
     // code block to read & populate arrays for names
     ifstream fin("names.txt");
@@ -51,37 +50,42 @@ int main()
     for (int i = 0; i < tripSize; i++) // creation of a for loop to populate the std::list with Goat objects
     {
         // defined in Goat.h
-        age = rand() % MAX_AGE; 
-        name = names[rand() % SZ_NAMES];
-        color = colors[rand() % SZ_COLORS];
-        Goat tmp(name, age, color);
-        trip.push_back(tmp);
+        age = rand() % (MAX_AGE + 1); // random generation of a age between 0 - 20 (MAX_AGE) and assigning it to "age"
+        name = names[rand() % SZ_NAMES]; // random selection of a name within the "names" array and assigning it to "name"
+        color = colors[rand() % SZ_COLORS]; // random selection of a color within the "colors" array and assigning it to "color"
+        Goat tmp(name, age, color); // creation of a temp "tmp" Goat object with all 3 parameters
+        trip.push_back(tmp); // using .push_back() member function, adds Goat object to the end of the list 
     }
     
     // Goat Manager 3001 Engine
-    int sel = main_menu();
-    while (sel != 4) {
-        switch (sel) {
+    int sel = main_menu(); // main_menu() function call - displays GM3K1 menu, retrieves user's menu choice, assigns it to sel
+    while (sel != 12) // creation of a while loop so that the user can continue to select menu options until they wish to quit program
+    {
+        switch (sel) // creation of a switch statement that handles cases of each numbered menu option based on sel
+        {
             case 1:
                 cout << "Adding a goat.\n";
                 add_goat(trip, names, colors);
                 break;
+
             case 2:    
                 cout << "Removing a goat.\n";
                 delete_goat(trip);
                 break;
+                
             case 3:    
                 cout << "Displaying goat data.\n";
                 display_trip(trip);
                 break;
+                
             default:
                 cout << "Invalid selection.\n";
                 break;
         }
-        sel = main_menu();
+        
+        sel = main_menu(); // prompt the user to enter another selection
     }
     
-
     return 0;
 }
 
