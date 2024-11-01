@@ -111,7 +111,7 @@ int main()
                 break;
 
             case 10:
-                erase_goats_below_age(trip); // erase_goats_below_age() function call, will erase Goat objects that match/are of a certain age
+                erase_goats_below_age(trip); // erase_goats_below_age() function call, will erase goats that are below a certain age
                 break;
 
             case 11:
@@ -319,6 +319,7 @@ void fill_trip(list<Goat> &trip)
     // using the fill member function to fill a range with a placeholder goat (resetting the first 3 to default values)
     // name & color will be set to "Unknown" string and age will be set to 0
     fill(trip.begin(), next(trip.begin(), 3), Goat("Unknown", 0, "Unknown"));
+    cout << "The first 3 Goat objects have been filled/reset to default values:" << endl;
     display_trip(trip); // display_trip() function call to output the modified std::list
 }
 
@@ -340,7 +341,7 @@ void accumulate_trip_age(list<Goat> trip)
 }
 
 // void erase_goats_below_age(list<Goat> &trip) function header
-// DESCRIPTION: this function will erase all Goat objects that are below a certain age (age is provided through user input)
+// DESCRIPTION: this function will erase all goats that are below a certain age (age is provided through user input)
 // // - the modified std::list is printed
 // ARGUMENTS: list<Goat> &trip, which is a list of Goat objects
 // - passing by reference because the list will be modified and this modification will also reflect in main()
@@ -350,13 +351,22 @@ void erase_goats_below_age(list<Goat> &trip)
     int age; // to hold the user's choice for age (this age will determine the Goat objects that are being erased)
     do // creation of a do-while loop to ensure user input validation - prompt user until they enter a valid age (0-20)
     {
-        cout << "Enter the goat's age you would like to check/search for (0-20): ";
+        cout << "Enter a age (any goats that are below this age will be erased from the list): ";
         cin >> age;
 
         if (age < 0 || age > 20) 
             cout << "ERROR: Goat's age must be between 0-20. Please try again and enter a valid age." << endl;
 
     } while (age < 0 || age > 20);
+
+    // erase and remove_if member functions are used to erase goats below a certain age
+    // starts at the beginning of the std::list and searchs until the end (trip.begin() and trip.end())
+    // [age] is used to compare the user's input to the ages of the Goat objects stored within the std::list
+    // const Goat& g is a reference to a Goat object, const is used to signify that the original object should not be modified
+    // return g.get_age() < age
+    trip.erase(remove_if(trip.begin(), trip.end(), [age](const Goat& g){ return g.get_age() < age; }), trip.end());
+    cout << "All goats below the age " << age << " have been erased from the list." << endl;
+    display_trip(trip); // display_trip() function call to output the modified std::list
 }
 
 // int select_goat(list<Goat> trp) function header
