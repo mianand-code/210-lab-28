@@ -360,13 +360,23 @@ void erase_goats_below_age(list<Goat> &trip)
     } while (age < 0 || age > 20);
 
     // erase and remove_if member functions are used to erase goats below a certain age
-    // starts at the beginning of the std::list and searchs until the end (trip.begin() and trip.end())
+    // starts at the beginning of the std::list and continues until the end (trip.begin() and trip.end())
     // [age] is used to compare the user's input to the ages of the Goat objects stored within the std::list
     // const Goat& g is a reference to a Goat object, const is used to signify that the original object should not be modified
-    // return g.get_age() < age
+    // return g.get_age() < age checks if any of the Goat objects within the std::list are below the age that the user entered. True or false is returned
     trip.erase(remove_if(trip.begin(), trip.end(), [age](const Goat& g){ return g.get_age() < age; }), trip.end());
     cout << "All goats below the age " << age << " have been erased from the list." << endl;
     display_trip(trip); // display_trip() function call to output the modified std::list
+}
+
+// void clear_trip(list<Goat> &trip) function header
+// DESCRIPTION: this function will completely clear all of the Goat objects stored in the std::list
+// ARGUMENTS: list<Goat> &trip, which is a list of Goat objects
+// - passing by reference because the list will be modified and this modification will also reflect in main()
+// RETURNS: nothing, void function
+void clear_trip(list<Goat> &trip)
+{
+    trip.clear(); // using clear member function to completely clear the std::list
 }
 
 // int select_goat(list<Goat> trp) function header
