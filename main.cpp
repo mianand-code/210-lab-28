@@ -87,27 +87,35 @@ int main()
                 break;
 
             case 4:
+                reverse_trip(trip); // reverse_trip() function call, will reverse the order of the Goat objects stored in the std::list
                 break;
 
             case 5:
+                find_goat(trip); // find_goat() function call, will allow the user to search for a Goat object by name
                 break;
             
             case 6:
+                any_of_goat_age(trip); // any_of_goat_age() function call, will allow the user to check if any of the Goat objects match/have a certain age
                 break;
 
             case 7:
+                shuffle_trip(trip); // shuffle_trip() function call, will shuffle the order of the Goat objects stored in the std::list, randomly
                 break;
             
             case 8:
+                fill_trip(trip); // fill_trip() function call, will fill/reset the 1st 3 Goat objects in the list to default values
                 break;
 
             case 9:
+                accumulate_trip_age(trip); // accumulate_trip_age() function call, will take the ages for all of the Goat objects and sum them up
                 break;
 
             case 10:
+                erase_goats_below_age(trip); // erase_goats_below_age() function call, will erase Goat objects that match/are of a certain age
                 break;
 
             case 11:
+                clear_trip(trip); // clear_trip() function call, will c
                 break;
 
             case 12:
@@ -140,7 +148,12 @@ int main_menu()
     cout << "[3] List goats" << endl;
     cout << "[4] Reverse the goat trip" << endl;
     cout << "[5] Find a goat (by name)" << endl;
-    cout << "[6] Check if "
+    cout << "[6] Check if any of the goats are of a certain age" << endl;
+    cout << "[7] Shuffle the goat trip" << endl;
+    cout << "[8] Fill/reset the 1st 3 goats in the trip to default values" << endl;
+    cout << "[9] Accumulate/sum up all of the ages in the goat trip" << endl;
+    cout << "[10] Erase/remove goats that are below a certain age" << endl;
+    cout << "[11] Clear the goat trip" << endl;
     cout << "[12] Quit" << endl;
     cout << "Choice --> ";
 
