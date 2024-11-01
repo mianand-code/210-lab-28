@@ -291,13 +291,29 @@ void any_of_goat_age(list<Goat> trip)
 }
 
 // void shuffle_trip(list<Goat> &trip) function header
-// DESCRIPTION: 
+// DESCRIPTION: this function will shuffle the order of the Goat objects stored in the std::list, randomly
 // ARGUMENTS: list<Goat> &trip, which is a list of Goat objects
 // - passing by reference because the list will be modified and this modification will also reflect in main()
 // RETURNS: nothing, void function
 void shuffle_trip(list<Goat> &trip)
 {
+    // using the shuffle member function (& default_random_engine() included in the <random> header) to randomly shuffle the order of the std::list from beginning to end
+    shuffle(trip.begin(), trip.end(), default_random_engine());
+    cout << "The order of the goat trip has been randomly shuffled:" << endl;
+    display_trip(trip); // display_trip() function call to output the modified std::list
+}
 
+// void fill_trip(list<Goat> &trip) function header
+// DESCRIPTION: this function takes a range of Goat objects (in this case, the 1st 3 goats) and fills them with set default values
+// ARGUMENTS: list<Goat> &trip, which is a list of Goat objects
+// - passing by reference because the list will be modified and this modification will also reflect in main()
+// RETURNS: nothing, void function
+void fill_trip(list<Goat> &trip)
+{
+    // using the fill member function to fill a range with a placeholder goat (resetting the first 3 to default values)
+    // name & color will be set to "Unknown" string and age will be set to 0
+    fill(trip.begin(), next(trip.begin(), 3), Goat("Unknown", 0, "Unknown"));
+    display_trip(trip); // display_trip() function call to output the modified std::list
 }
 
 // int select_goat(list<Goat> trp) function header
