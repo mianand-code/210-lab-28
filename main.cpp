@@ -262,6 +262,27 @@ void find_goat(list<Goat> trip)
         cout << name << " was not found." << endl << endl;
 }
 
+// void any_of_goat_age(list<Goat> trip) function header
+// DESCRIPTION:
+// ARGUMENTS: list<Goat> trip, which is a list of Goat objects
+// RETURNS: nothing, void function
+void any_of_goat_age(list<Goat> trip)
+{
+    int age; // to hold the age the user would like to check for (to see if any Goat objects have this age)
+    do // creation of a do-while loop to ensure user input validation - prompt user until they enter a valid age (0-20)
+    {
+        cout << "Enter the goat's age you would like to check/search for (0-20): ";
+        cin >> age;
+
+        if (age < 0 || age > 20) 
+            cout << "ERROR: Goat's age must be between 0-20. Please try again and enter a valid age." << endl;
+
+    } while (age < 0 || age > 20);
+
+    bool hasAge = any_of(trip.begin(), trip.end(), [age](const Goat& g){ return g.get_age() == age; });
+    cout << "Is there a goat with age " << age << "? " << (hasAge ? "Yes" : "No") << endl << endl;
+}
+
 // int select_goat(list<Goat> trp) function header
 // DESCRIPTION: this function will output the contents of the list, prompt the user to select a Goat object (#) they would like to delete from the list, and then return this choice
 // - the user's choice is validated to ensure they do not select a # that is not within the range of the list size
