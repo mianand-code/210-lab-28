@@ -1,3 +1,7 @@
+// COMSC-210 | Lab 28 | Mira Anand
+// Module 10, Lesson: std::map & STL Algorithms, Assignment: STL Algorithms
+// IDE used: Visual Studio Code for Mac
+
 #include <iostream>
 #include <fstream>
 #include <iomanip>
