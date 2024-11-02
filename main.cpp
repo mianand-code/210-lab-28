@@ -9,7 +9,7 @@
 #include "Goat.h" // references the Goat header file, which contains a complete class for Goat objects
 #include <iostream>
 #include <list> // needed to use std::list
-#include <random> // to use default_random_engine() - for shuffling
+#include <numeric> // to use accumulate
 #include <string>
 using namespace std;
 
@@ -25,7 +25,7 @@ void display_trip(list<Goat> trip);
 void reverse_trip(list<Goat> &trip);
 void find_goat(list<Goat> trip);
 void any_of_goat_age(list<Goat> trip);
-void shuffle_trip(list<Goat> &trip);
+void increase_age_for_each(list<Goat> &trip);
 void fill_trip(list<Goat> &trip);
 void accumulate_trip_age(list<Goat> trip);
 void erase_goats_below_age(list<Goat> &trip);
@@ -99,7 +99,7 @@ int main()
                 break;
 
             case 7:
-                shuffle_trip(trip); // shuffle_trip() function call, will shuffle the order of the Goat objects stored in the std::list, randomly
+                increase_age_for_each(trip); // increase_age_for_each() function call, will increase the age by 1 for each Goat object
                 break;
             
             case 8:
@@ -149,7 +149,7 @@ int main_menu()
     cout << "[4] Reverse the goat trip" << endl;
     cout << "[5] Find a goat (by name)" << endl;
     cout << "[6] Check if any of the goats are of a certain age" << endl;
-    cout << "[7] Shuffle the goat trip" << endl;
+    cout << "[7] Increase the age (by 1) for each goat" << endl;
     cout << "[8] Fill/reset the 1st 3 goats in the trip to default values" << endl;
     cout << "[9] Accumulate/sum up all of the ages in the goat trip" << endl;
     cout << "[10] Erase/remove goats that are below a certain age" << endl;
@@ -273,15 +273,15 @@ void find_goat(list<Goat> trip)
 void any_of_goat_age(list<Goat> trip)
 {
     int age; // to hold the age the user would like to check for (to see if any Goat objects have this age)
-    do // creation of a do-while loop to ensure user input validation - prompt user until they enter a valid age (0-20)
+    do // creation of a do-while loop to ensure user input validation - prompt user until they enter a valid age (0-21) - 21 is the max because our increase_age_for_each() function can increase the MAX_AGE (20) by 1
     {
-        cout << "Enter the goat's age you would like to check/search for (0-20): ";
+        cout << "Enter the goat's age you would like to check/search for (0-21): ";
         cin >> age;
 
-        if (age < 0 || age > 20) 
-            cout << "ERROR: Goat's age must be between 0-20. Please try again and enter a valid age." << endl;
+        if (age < 0 || age > 21) 
+            cout << "ERROR: Goat's age must be between 0-21. Please try again and enter a valid age." << endl;
 
-    } while (age < 0 || age > 20);
+    } while (age < 0 || age > 21);
 
     // create a bool named "hasAge"
     // use the any_of member function to see if any of the Goat objects within the std::list match/are of the age that the user entered
@@ -293,17 +293,20 @@ void any_of_goat_age(list<Goat> trip)
     cout << "Is there a goat with age " << age << "? " << (hasAge ? "Yes" : "No") << endl << endl; // yes will be printed if a match/matches are found, otherwise no will be printed
 }
 
-// void shuffle_trip(list<Goat> &trip) function header
-// DESCRIPTION: this function will shuffle the order of the Goat objects stored in the std::list, randomly
+// void increase_age_for_each(list<Goat> &trip)
+// DESCRIPTION: this function will will increase the age (by 1) for each Goat object within the std::list
 // - the modified std::list is printed
 // ARGUMENTS: list<Goat> &trip, which is a list of Goat objects
 // - passing by reference because the list will be modified and this modification will also reflect in main()
 // RETURNS: nothing, void function
-void shuffle_trip(list<Goat> &trip)
+void increase_age_for_each(list<Goat> &trip)
 {
-    // using the shuffle member function (& default_random_engine() included in the <random> header) to randomly shuffle the order of the std::list from beginning to end
-    shuffle(trip.begin(), trip.end(), default_random_engine());
-    cout << "The order of the goat trip has been randomly shuffled:" << endl;
+    // use the for_each member function to increase the age of each goat by 1
+    // for_each will start at the beginning of the std::list and continue to the end (trip.begin() and trip.end())
+    // Goat& g is a reference to a Goat object
+    // g.set_age(g.get_age() + 1) - gets the age of the Goat object, adds 1 to it, and sets this value as the new age
+    for_each(trip.begin(), trip.end(), [](Goat& g){ g.set_age(g.get_age() + 1); });
+    cout << "The age of each goat has been increased by 1:" << endl;
     display_trip(trip); // display_trip() function call to output the modified std::list
 }
 
@@ -349,15 +352,15 @@ void accumulate_trip_age(list<Goat> trip)
 void erase_goats_below_age(list<Goat> &trip)
 {
     int age; // to hold the user's choice for age (this age will determine the Goat objects that are being erased)
-    do // creation of a do-while loop to ensure user input validation - prompt user until they enter a valid age (0-20)
+    do // creation of a do-while loop to ensure user input validation - prompt user until they enter a valid age (0-21) - 21 is the max because our increase_age_for_each() function can increase the MAX_AGE (20) by 1
     {
         cout << "Enter a age (any goats that are below this age will be erased from the list): ";
         cin >> age;
 
-        if (age < 0 || age > 20) 
-            cout << "ERROR: Goat's age must be between 0-20. Please try again and enter a valid age." << endl;
+        if (age < 0 || age > 21) 
+            cout << "ERROR: Goat's age must be between 0-21. Please try again and enter a valid age." << endl;
 
-    } while (age < 0 || age > 20);
+    } while (age < 0 || age > 21);
 
     // erase and remove_if member functions are used to erase goats below a certain age
     // starts at the beginning of the std::list and continues until the end (trip.begin() and trip.end())
@@ -377,6 +380,7 @@ void erase_goats_below_age(list<Goat> &trip)
 void clear_trip(list<Goat> &trip)
 {
     trip.clear(); // using clear member function to completely clear the std::list
+    cout << "Trip cleared. New trip size: " << trip.size() << endl; // using .size() member function, to display the new size of the trip
 }
 
 // int select_goat(list<Goat> trp) function header
