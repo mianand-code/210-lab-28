@@ -67,9 +67,9 @@ int main()
     
     // Goat Manager 3001 Engine
     int sel = main_menu(); // main_menu() function call - displays GM3K1 menu, retrieves user's menu choice, assigns it to sel
-    while (sel != 12) // creation of a while loop so that the user can continue to select menu options until they wish to quit program
+    while (sel != 12) // creation of a while loop so that the user can continue to select menu options until they wish to quit program (option #12)
     {
-        switch (sel) // creation of a switch statement that handles cases of each numbered menu option based on sel
+        switch (sel) // creation of a switch statement that handles cases of each numbered menu option - based on sel
         {
             case 1:
                 cout << "Adding a goat.\n";
@@ -107,7 +107,7 @@ int main()
                 break;
 
             case 9:
-                accumulate_trip_age(trip); // accumulate_trip_age() function call, will take the ages for all of the Goat objects and sum them up
+                accumulate_trip_age(trip); // accumulate_trip_age() function call, will take the ages of all of the Goat objects and sum them up
                 break;
 
             case 10:
@@ -120,7 +120,6 @@ int main()
 
             case 12:
                 // option #12 is when user wants to quit
-                cout << "Exiting program..." << endl;
                 break;
 
             // user input validation for menu option # (has to be 1-12)
@@ -132,6 +131,8 @@ int main()
         
         sel = main_menu(); // prompt the user to enter another selection
     }
+
+    cout << "Exiting program..." << endl; // option #12 was entered
     
     return 0;
 }
@@ -161,7 +162,8 @@ int main_menu()
     cin >> choice;
     // input validation is performed, to ensure that the user does not input an invalid menu option #
     // if they input an invalid choice, they will be prompted again until they enter a valid choice
-    while (choice < 1 || choice > 12) {
+    while (choice < 1 || choice > 12) 
+    {
         cout << "Invalid, again --> ";
         cin >> choice;
     }
@@ -185,7 +187,7 @@ void add_goat(list<Goat> &trip, string nms[], string cls[])
     string cl = cls[rand() % SZ_COLORS]; // random selection of a color within the "cls" array and assigning it to "cl"
     Goat tmp(nm, age, cl); // creation of a temp "tmp" Goat object with all 3 parameters
     trip.push_back(tmp); // using .push_back() member function, adds Goat object to the end of the list 
-    cout << "Goat added. New trip size: " << trip.size() << endl; // using .size() member function, to display the new size of the trip
+    cout << "Goat added. New trip size: " << trip.size() << endl << endl; // using .size() member function, to display the new size of the trip
 }
 
 // void delete_goat(list<Goat> &trip) function header
@@ -220,17 +222,18 @@ void display_trip(list<Goat> trp)
              << gt.get_name() 
              << " (" << gt.get_age() 
              << ", " << gt.get_color() << ")\n";
+    cout << endl;
 }
 
 // void reverse_trip(list<Goat> &trip) function header
 // DESCRIPTION: this function will reverse the order of the Goat objects stored in the std::list
-// - the modified std::list is printed
+// - the modified std::list is then printed
 // ARGUMENTS: list<Goat> &trip, which is a list of Goat objects
 // - passing by reference because the list will be modified and this modification will also reflect in main()
 // RETURNS: nothing, void function
 void reverse_trip(list<Goat> &trip)
 {
-    reverse(trip.begin(), trip.end()); // using the reverse member function to reverse the order of the std::list from beginning to end
+    trip.reverse(); // using the reverse member function to reverse the order of the std::list
     cout << "The order of the goat trip has been reversed:" << endl;
     display_trip(trip); // display_trip() function call to output the modified std::list
 }
@@ -239,11 +242,13 @@ void reverse_trip(list<Goat> &trip)
 // DESCRIPTION: this function prompts the user to enter the name of a goat that they would like to find within the std::list
 // - disclaimer: the user is informed that name entry is case sensitive, they should enter the goat's name exactly the way it is stored within the std::list
 // - if the goat is found, the goat's age and color are also printed. The user is notified if the goat is not found
+// - note: if there are duplicate names within the list, the name that comes first in the list will be the one whose data is printed
 // ARGUMENTS: list<Goat> trip, which is a list of Goat objects
 // RETURNS: nothing, void function
 void find_goat(list<Goat> trip)
 {
     string name; // to hold the name of the goat the user would like to find
+    cin.ignore(); // needed after cin and before getline
     cout << "Enter the name of the goat you want to find (case sensitive): ";
     getline(cin, name);
     while (name.empty()) // user input validation, to ensure the field is not left blank
@@ -255,9 +260,9 @@ void find_goat(list<Goat> trip)
     // create an iterator
     // use the find_if member function to find the goat within the std::list
     // find_if will start at the beginning of the std::list and search until the end (trip.begin() and trip.end())
-    // [name] is used to compare the user's input to the names of the Goat objects stored within the std::list
+    // [name] is used to compare the user's input to each of the names of the Goat objects stored within the std::list
     // const Goat& g is a reference to a Goat object, const is used to signify that the original object should not be modified
-    // return g.get_name() == name checks if the name entered by the user matches the name of a certain Goat object within the std::list. True or false is returned
+    // return g.get_name() == name checks if the name entered by the user matches the name of a certain Goat object within the std::list
     auto it = find_if(trip.begin(), trip.end(), [name](const Goat& g){ return g.get_name() == name; });
     if (it != trip.end()) // if the iterator has not gone beyond the range of the std::list, we have found the goat
         cout << it->get_name() << " found with age " << it->get_age() << " and color " << it->get_color() << endl << endl; // call all getters to display info about goat
@@ -273,7 +278,9 @@ void find_goat(list<Goat> trip)
 void any_of_goat_age(list<Goat> trip)
 {
     int age; // to hold the age the user would like to check for (to see if any Goat objects have this age)
-    do // creation of a do-while loop to ensure user input validation - prompt user until they enter a valid age (0-21) - 21 is the max because our increase_age_for_each() function can increase the MAX_AGE (20) by 1
+    // creation of a do-while loop to ensure user input validation - prompt user until they enter a valid age (0-21)  
+    // 21 is the max because our increase_age_for_each() function can increase the MAX_AGE (20) by 1
+    do
     {
         cout << "Enter the goat's age you would like to check/search for (0-21): ";
         cin >> age;
@@ -284,7 +291,7 @@ void any_of_goat_age(list<Goat> trip)
     } while (age < 0 || age > 21);
 
     // create a bool named "hasAge"
-    // use the any_of member function to see if any of the Goat objects within the std::list match/are of the age that the user entered
+    // use the any_of member function to check if any of the Goat objects within the std::list match the age that the user entered
     // any_of will start at the beginning of the std::list and search until the end (trip.begin() and trip.end())
     // [age] is used to compare the user's input to the ages of the Goat objects stored within the std::list
     // const Goat& g is a reference to a Goat object, const is used to signify that the original object should not be modified
@@ -295,7 +302,7 @@ void any_of_goat_age(list<Goat> trip)
 
 // void increase_age_for_each(list<Goat> &trip)
 // DESCRIPTION: this function will will increase the age (by 1) for each Goat object within the std::list
-// - the modified std::list is printed
+// - the modified std::list is then printed
 // ARGUMENTS: list<Goat> &trip, which is a list of Goat objects
 // - passing by reference because the list will be modified and this modification will also reflect in main()
 // RETURNS: nothing, void function
@@ -313,28 +320,28 @@ void increase_age_for_each(list<Goat> &trip)
 // void fill_trip(list<Goat> &trip) function header
 // DESCRIPTION: this function takes a range of Goat objects (in this case, the 1st 3 goats) and fills them with set default values
 // - this resets the values of the 1st 3 goats
-// - the modified std::list is printed
+// - the modified std::list is then printed
 // ARGUMENTS: list<Goat> &trip, which is a list of Goat objects
 // - passing by reference because the list will be modified and this modification will also reflect in main()
 // RETURNS: nothing, void function
 void fill_trip(list<Goat> &trip)
 {
     // using the fill member function to fill a range with a placeholder goat (resetting the first 3 to default values)
-    // name & color will be set to "Unknown" string and age will be set to 0
+    // name & color will be set to "Unknown" and age will be set to 0
     fill(trip.begin(), next(trip.begin(), 3), Goat("Unknown", 0, "Unknown"));
     cout << "The first 3 Goat objects have been filled/reset to default values:" << endl;
     display_trip(trip); // display_trip() function call to output the modified std::list
 }
 
 // void accumulate_trip_age(list<Goat> trip) function header
-// DESCRIPTION: this function takes the ages for all of the Goat objects, sums them up, and outputs the calculated total
+// DESCRIPTION: this function takes the ages of all of the Goat objects, sums them up, and outputs the calculated total
 // ARGUMENTS: list<Goat> trip, which is a list of Goat objects
 // RETURNS: nothing, void function
 void accumulate_trip_age(list<Goat> trip)
 {
-    // creation of an int variable called "totalAge"
+    // creation of an int variable named "totalAge"
     // use the accumulate member function to sum up the ages of all Goat objects within the std::list
-    // accumulate will start at the beginning of the std::list and search until the end (trip.begin() and trip.end())
+    // accumulate will start at the beginning of the std::list and continue until the end (trip.begin() and trip.end())
     // the sum will start at 0
     // int sum will keep a running total of all the ages
     // const Goat& g is a reference to a Goat object, const is used to signify that the original object should not be modified
@@ -345,29 +352,32 @@ void accumulate_trip_age(list<Goat> trip)
 
 // void erase_goats_below_age(list<Goat> &trip) function header
 // DESCRIPTION: this function will erase all goats that are below a certain age (age is provided through user input)
-// // - the modified std::list is printed
+// - the modified std::list is then printed
 // ARGUMENTS: list<Goat> &trip, which is a list of Goat objects
 // - passing by reference because the list will be modified and this modification will also reflect in main()
 // RETURNS: nothing, void function
 void erase_goats_below_age(list<Goat> &trip)
 {
     int age; // to hold the user's choice for age (this age will determine the Goat objects that are being erased)
-    do // creation of a do-while loop to ensure user input validation - prompt user until they enter a valid age (0-21) - 21 is the max because our increase_age_for_each() function can increase the MAX_AGE (20) by 1
+    // creation of a do-while loop to ensure user input validation - prompt user until they enter a valid age (1-21) 
+    // - 21 is the max because our increase_age_for_each() function can increase the MAX_AGE (20) by 1
+    // - 1 is the minimum because an age below 1 is 0, which is still valid. But no goats have a negative age
+    do
     {
-        cout << "Enter a age (any goats that are below this age will be erased from the list): ";
+        cout << "Enter a age. Any goats that are below this age will be erased from the list (1-21): ";
         cin >> age;
 
-        if (age < 0 || age > 21) 
-            cout << "ERROR: Goat's age must be between 0-21. Please try again and enter a valid age." << endl;
+        if (age < 1 || age > 21) 
+            cout << "ERROR: Goat's age must be between 1-21. Please try again and enter a valid age." << endl;
 
-    } while (age < 0 || age > 21);
+    } while (age < 1 || age > 21);
 
     // erase and remove_if member functions are used to erase goats below a certain age
     // starts at the beginning of the std::list and continues until the end (trip.begin() and trip.end())
     // [age] is used to compare the user's input to the ages of the Goat objects stored within the std::list
-    // const Goat& g is a reference to a Goat object, const is used to signify that the original object should not be modified
-    // return g.get_age() < age checks if any of the Goat objects within the std::list are below the age that the user entered. True or false is returned
-    trip.erase(remove_if(trip.begin(), trip.end(), [age](const Goat& g){ return g.get_age() < age; }), trip.end());
+    // Goat& g is a reference to a Goat object
+    // return g.get_age() < age checks if any of the Goat objects within the std::list are below the age that the user entered
+    trip.erase(remove_if(trip.begin(), trip.end(), [age](Goat& g){ return g.get_age() < age; }), trip.end());
     cout << "All goats below the age " << age << " have been erased from the list." << endl;
     display_trip(trip); // display_trip() function call to output the modified std::list
 }
@@ -380,7 +390,7 @@ void erase_goats_below_age(list<Goat> &trip)
 void clear_trip(list<Goat> &trip)
 {
     trip.clear(); // using clear member function to completely clear the std::list
-    cout << "Trip cleared. New trip size: " << trip.size() << endl; // using .size() member function, to display the new size of the trip
+    cout << "Trip cleared. New trip size: " << trip.size() << endl << endl; // using .size() member function, to display the new size of the trip
 }
 
 // int select_goat(list<Goat> trp) function header

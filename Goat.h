@@ -34,7 +34,7 @@ public:
     // DESCRIPTION: initializes name by parameter, age to a random number between 0-20, and color to an empty string
     // ARGUMENTS: string n, represents the goat's name
     // RETURNS: no return type
-    Goat(string n)                  { name = n; age = rand() % MAX_AGE; color = ""; }
+    Goat(string n)                  { name = n; age = rand() % (MAX_AGE + 1); color = ""; }
 
     // creation of a partial constructor, Goat(string n, int a)
     // DESCRIPTION: initializes name and age by parameter, color to an empty string
@@ -77,7 +77,7 @@ public:
     // write overloaded < operator for the std::list
     // this is needed so we can decide how we want Goat objects to be sorted
     // in this case - we want to sort alphabetically, by name
-    // needed for std::list as well, if we want to use .sort() function
+    // needed for std::list, if we want to use .sort() function
     bool operator< (const Goat &other) const {
         return name < other.name;
     }
